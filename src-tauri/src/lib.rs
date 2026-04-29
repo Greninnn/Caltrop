@@ -1,7 +1,11 @@
-use std::iter::Once;
+mod models;
 
+use std::iter::Once;
+use std::string;
+use tauri::State;
 use tauri::Manager;
-use crate::models::config::Config;
+use tokio::sync::Mutex;
+use models::config::Config;
 
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 #[tauri::command]
@@ -10,9 +14,9 @@ fn greet(name: &str) -> String {
 }
 
 #[tauri::command]
-async fn set_steamgrid_key(api_key: &str, state: State<'_, Mutex<Config>>) -> String {
+async fn set_steamgrid_key(api_key: &str, state: State<'_, Mutex<Config>>) -> Result<String, String> {
     let mut state = state.lock().await;
-    "".to_string()
+    Ok(("".to_string()))
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
