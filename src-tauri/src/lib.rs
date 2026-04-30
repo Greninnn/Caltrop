@@ -14,9 +14,10 @@ fn greet(name: &str) -> String {
 }
 
 #[tauri::command]
-async fn set_steamgrid_key(api_key: &str, state: State<'_, Mutex<Config>>) -> Result<String, String> {
+async fn set_steamgrid_key(api_key: &str, state: State<'_, Mutex<Config>>) -> Result<(), String> {
     let mut state = state.lock().await;
-    Ok(("".to_string()))
+    state.steamgrid_api_key = Some(api_key.to_string());
+    Ok(())
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]

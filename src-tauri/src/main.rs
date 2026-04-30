@@ -6,7 +6,5 @@ mod sources;
 mod models;
 #[tokio::main]
 async fn main() {
-    println!("{:#?}", get_image_for_id("1384160").await.get(0));
-
     app_launcher_lib::run();
 }

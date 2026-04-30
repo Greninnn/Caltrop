@@ -1,6 +1,8 @@
 <script lang="ts">
     import { invoke } from "@tauri-apps/api/core";
 
+    let api_key = $state("")
+
     let name = $state("");
     let greetMsg = $state("");
     let kim = "kim";
@@ -9,6 +11,11 @@
         event.preventDefault();
         // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
         greetMsg = await invoke("greet", { name });
+    }
+    async function setApiKey(event: Event) {
+        event.preventDefault();
+        // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
+        greetMsg = await invoke("get_image_for_id", { api_key });
     }
 </script>
 
@@ -40,6 +47,16 @@
         />
         <button type="submit">Greet</button>
     </form>
+
+    <form class="row" onsubmit={setApiKey}>
+        <input
+            id="api-input"
+            placeholder="Enter api key..."
+            bind:value={api_key}
+        />
+        <button type="submit">Greet</button>
+    </form>
+
     <p>{greetMsg}</p>
     <p>{kim}</p>
 </main>
@@ -140,6 +157,10 @@
     }
 
     #greet-input {
+        margin-right: 5px;
+    }
+
+    #api-input {
         margin-right: 5px;
     }
 

@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Default, Clone, Copy, Debug)]
+#[derive(Serialize, Deserialize, Default, Clone, Debug)]
 pub struct Config {
-    steamgrid_api_key: Option<&'static str>, 
+    pub steamgrid_api_key: Option<String>, 
 }
