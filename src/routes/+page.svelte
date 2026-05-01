@@ -1,25 +1,24 @@
 <script lang="ts">
     import { invoke } from "@tauri-apps/api/core";
+    import type { Image } from "../lib/types/image";
+    import { getImageUrl, setSteamGridDbApiKey } from "../lib/api/tauri";
 
     let api_key = $state("")
+    let appId = $state("")
+    let imageUrl = $state("")
 
-    let name = $state("");
-    let greetMsg = $state("");
-    let kim = "kim";
-
-    async function greet(event: Event) {
-        event.preventDefault();
-        // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-        greetMsg = await invoke("greet", { name });
-    }
     async function setApiKey(event: Event) {
         event.preventDefault();
-        // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-        greetMsg = await invoke("get_image_for_id", { api_key });
+        setSteamGridDbApiKey(api_key);
     }
-    async function getImage(id: String): Promise<String> {
-        return await invoke("get_image_for_id", { id }).then((image) => image.url)
-    } 
+
+    async function getImage(event: Event) {
+        event.preventDefault();
+        const images = await getImageUrl(appId);
+        imageUrl = images[0].url
+        console.log(imageUrl)
+    }
+
 </script>
 
 <main class="container">
@@ -34,7 +33,18 @@
         <button type="submit">Submit</button>
     </form>
 
-    <p>{greetMsg}</p>
+    <form class="row" onsubmit={getImage}>
+        <input
+            id="api-input"
+            placeholder="Enter a steam appid"
+            bind:value={appId}
+        />
+        <button type="submit">Submit</button>
+    </form>
+
+    <p>
+        <img alt="appid game" src="{imageUrl}">
+    </p>
 </main>
 
 <style>
@@ -77,6 +87,10 @@
 
     h1 {
         text-align: center;
+    }
+
+    img {
+        height: 400px
     }
 
     input,
