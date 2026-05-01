@@ -79,6 +79,10 @@
         justify-content: center;
     }
 
+    form {
+        padding: 5px;
+    }
+
     a {
         font-weight: 500;
         color: #646cff;
