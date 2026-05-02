@@ -1,5 +1,3 @@
-use std::error::Error;
-
 use steamgriddb_api::{images::Image, query_parameters::Platform, Client, QueryType};
 use tauri::State;
 use tokio::sync::Mutex;

@@ -1,6 +1,4 @@
 <script lang="ts">
-    import { invoke } from "@tauri-apps/api/core";
-    import type { Image } from "../lib/types/image";
     import { getImageUrl, setSteamGridDbApiKey } from "../lib/api/tauri";
 
     let api_key = $state("")
