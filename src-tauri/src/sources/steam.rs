@@ -1,25 +1,25 @@
-use steamgriddb_api::{images::Image, query_parameters::Platform, Client, QueryType};
-use tauri::State;
-use tokio::sync::Mutex;
+use async_trait::async_trait;
 
-use crate::models::config::Config;
+use crate::{
+    models::{error::SourceError, game::Game},
+    sources::source_trait::{GameSource, Source},
+};
 
-#[tauri::command]
-pub async fn get_image_for_id(
-    id: &str,
-    state: State<'_, Mutex<Config>>,
-) -> Result<Vec<Image>, String> {
-    let config = state.lock().await;
+pub struct SteamSource;
 
-    let api = match &config.steamgrid_api_key {
-        None => return Ok(Vec::new()),
-        Some(a) => a,
-    };
+impl SteamSource {
+    pub fn new() -> Self {
+        Self
+    }
+}
 
-    let client = Client::new(api);
+#[async_trait]
+impl GameSource for SteamSource {
+    fn name(&self) -> Source {
+        Source::Steam
+    }
 
-    client
-        .get_images_for_platform_id(&Platform::Steam, id, &QueryType::Grid(None))
-        .await
-        .map_err(|e| e.to_string())
+    async fn get_installed_games(&self) -> Result<Vec<Game>, SourceError> {
+        todo!("")
+    }
 }

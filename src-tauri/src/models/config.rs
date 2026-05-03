@@ -5,8 +5,6 @@ use std::{
 
 use directories_next::ProjectDirs;
 use serde::{Deserialize, Serialize};
-use tauri::State;
-use tokio::sync::Mutex;
 
 use crate::models::error::ConfigError;
 
@@ -55,16 +53,4 @@ impl Config {
 
         Ok(config)
     }
-}
-
-#[tauri::command]
-pub async fn set_steamgrid_key(
-    api_key: &str,
-    state: State<'_, Mutex<Config>>,
-) -> Result<(), String> {
-    log::debug!("got request to update api key to {api_key}");
-    let mut state = state.lock().await;
-    state.steamgrid_api_key = Some(api_key.to_string());
-
-    state.save_to_disk().map_err(|e| e.to_string())
 }

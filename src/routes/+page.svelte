@@ -1,9 +1,18 @@
 <script lang="ts">
-    import { getImageUrl, setSteamGridDbApiKey } from "../lib/api/tauri";
+    import { debug } from "@tauri-apps/plugin-log";
+    import { getImageUrl, getSteamGridDbApiKey, setSteamGridDbApiKey } from "../lib/api/tauri";
+    import { onMount } from "svelte";
 
     let api_key = $state("")
     let appId = $state("")
     let imageUrl = $state("")
+
+    onMount(async () => {
+        const key = await getSteamGridDbApiKey();
+        if (key) {
+            api_key = key;
+        }
+    });
 
     async function setApiKey(event: Event) {
         event.preventDefault();
@@ -12,9 +21,9 @@
 
     async function getImage(event: Event) {
         event.preventDefault();
-        const images = await getImageUrl(appId);
-        imageUrl = images[0].url
-        console.log(imageUrl)
+        const image = await getImageUrl(appId);
+        imageUrl = image
+        debug(imageUrl)
     }
 
 </script>

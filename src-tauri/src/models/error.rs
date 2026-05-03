@@ -11,3 +11,8 @@ pub enum ConfigError {
     #[error(transparent)]
     Serde(#[from] serde_json::Error),
 }
+
+#[derive(Debug, Error)]
+pub enum SourceError {
+    // TODO
+}

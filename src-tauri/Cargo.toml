@@ -28,4 +28,5 @@ directories-next = "2.0.0"
 thiserror = "2.0.18"
 tauri-plugin-log = "2"
 log = "0.4.29"
+async-trait = "0.1.89"
 
