@@ -14,5 +14,6 @@ pub enum ConfigError {
 
 #[derive(Debug, Error)]
 pub enum SourceError {
-    // TODO
+    #[error(transparent)]
+    JoinError(#[from] tokio::task::JoinError)
 }

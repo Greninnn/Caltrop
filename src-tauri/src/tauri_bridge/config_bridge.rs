@@ -1,7 +1,7 @@
 use tauri::State;
 use tokio::sync::Mutex;
 
-use crate::models::{app_state::AppState, config::Config};
+use crate::models::{app_state::AppState};
 
 #[tauri::command]
 pub async fn set_steamgrid_key(
