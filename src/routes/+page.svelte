@@ -2,6 +2,7 @@
     import { debug } from "@tauri-apps/plugin-log";
     import { getImageUrl, getSteamGridDbApiKey, setSteamGridDbApiKey } from "../lib/api/tauri";
     import { onMount } from "svelte";
+    import GameCard from "../components/game-card.svelte";
 
     let api_key = $state("")
     let appId = $state("")
@@ -30,6 +31,8 @@
 
 <main class="container">
     <h1>Welcome to coolapplauncher</h1>
+
+    <GameCard></GameCard>
 
     <form class="row" onsubmit={setApiKey}>
         <input
